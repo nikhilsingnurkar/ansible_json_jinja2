@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  vars:
+    jsonfile: "{{ lookup('file', './input.json')| from_json }}"
+  tasks:
+    - name: Parse json to template
+      debug: msg=" address:{{ item.ilo_ip }} username={{ item.ilo_user }} password={{ item.ilo_password }}"
+      with_items: "{{ jsonfile.array }}"
+
+    - name: Parse CSV To YAML
+      template:
+        src: "./template.j2"
+        dest: "./output.json.j2"
+      run_once: true

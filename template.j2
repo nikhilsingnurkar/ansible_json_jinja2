@@ -1,0 +1,7 @@
+{
+"array": [
+{% for mounts in jsonfile.array %}
+{ "address": "{{ mounts.ilo_ip }}", "username": "{{ mounts.ilo_user }}", "password": "{{ mounts.ilo_password }}" },
+{% endfor %}
+]
+}
